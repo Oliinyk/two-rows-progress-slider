@@ -66,17 +66,10 @@
             --muted-font: #545860;
             --accent: #4848ff;
             --head-primary: #232326;
-            --contrast-muted: black;
             --gray: #989aa2;
-            --accent-2: #ff6e6e;
-            --contrast-border: #ababab;
-            --hacker-green: #40d763;
             --contrast-font: black;
-            --muted-dark-font: black;
-            --almost-white: #fcfcfc;
             --transparent: rgba(255,255,255,0);
             --text-gray: #605f5f;
-            --footer-bg: #222328
         }
         .container {
             width: 100%;
@@ -546,15 +539,14 @@
     
     //Icon slider(slick)
 	function updateSlickXClass(slick, next) {
-      
-      const count = slick.slideCount,
+        const count = slick.slideCount,
             show = slick.options.slidesToShow,
             center = slick.options.centerMode,
             index = (next || 0) - center * (count > show ? Math.floor(show / 2) : 0),
             selector = shift => `[data-slick-index="${index + shift * count}"]`;
-      
-      $('.slick-x', slick.$slider).removeClass('slick-x');
-      $(selector(0) + ', ' + selector(1) + ', ' + selector(-1), slick.$slider).addClass('slick-x');
+        
+        $('.slick-x', slick.$slider).removeClass('slick-x');
+        $(selector(0) + ', ' + selector(1) + ', ' + selector(-1), slick.$slider).addClass('slick-x');
   }
 
   if ($('.slider-for').length) {
@@ -573,16 +565,16 @@
             breakpoint: 768,
             settings: {
             	slidesToShow: 5,
-        			slidesToScroll: 1
+        		slidesToScroll: 1
             }
           },
           {
             breakpoint: 575,
             settings: {
             	slidesToShow: 2.3,
-        			slidesToScroll: 1,
-              centerMode: false,
-        			variableWidth: false,
+        		slidesToScroll: 1,
+                centerMode: false,
+        		variableWidth: false,
             }
           }
         ]
@@ -603,6 +595,7 @@
         autoplaySpeed: 5000,
         centerMode: true,
         variableWidth: true,
+        dots: true,
         responsive: [
           {
             breakpoint: 767,
@@ -618,44 +611,42 @@
 	}
   
  	if ($('.slider-for').length) {
-      $('.slider-for').slick('slickGoTo', 0);
-  }
+        $('.slider-for').slick('slickGoTo', 0);
+    }
   
 	//slider progerssbar
 	function animateProgressLine($element) {
-    $element.css('width', '0%').animate({
-      width: '100%'
-    }, 5000);
-  }
+        $element.css('width', '0%').animate({
+        width: '100%'
+        }, 5000);
+    }
 
-  function resetProgressLines(exceptIndex) {
-    $('.text-slider .slick-slide').each(function(index) {
-      if (index !== exceptIndex) {
-        $(this).find('.progress-line').stop(true, true).css('width', '0%');
-      }
+    function resetProgressLines(exceptIndex) {
+        $('.text-slider .slick-slide').each(function(index) {
+            if (index !== exceptIndex) {
+                $(this).find('.progress-line').stop(true, true).css('width', '0%');
+            }
+        });
+    }
+
+    $('.text-slider').on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+        resetProgressLines(nextSlide);
     });
-  }
 
-  $('.text-slider').on('beforeChange', function(event, slick, currentSlide, nextSlide) {
-    resetProgressLines(nextSlide);
-  });
+    $('.text-slider').on('afterChange', function(event, slick, currentSlide) {
+        var $currentSlide = $(slick.$slides[currentSlide]);
+        var $progressLine = $currentSlide.find('.progress-line');
+        animateProgressLine($progressLine);
+    });
 
-  $('.text-slider').on('afterChange', function(event, slick, currentSlide) {
-    var $currentSlide = $(slick.$slides[currentSlide]);
-    var $progressLine = $currentSlide.find('.progress-line');
-    animateProgressLine($progressLine);
-  });
+    setTimeout(function() {
+        var $initialProgressLine = $('.text-slider .slick-slide.slick-current').find('.progress-line');
+        animateProgressLine($initialProgressLine);
+    }, 100); 
 
-  setTimeout(function() {
-    var $initialProgressLine = $('.text-slider .slick-slide.slick-current').find('.progress-line');
-    animateProgressLine($initialProgressLine);
-  }, 100); 
-
-  resetProgressLines(0);
-  // End slider progressbar
-  // End Icon slider(slick)
-
+    resetProgressLines(0);
+    // End slider progressbar
+    // End Icon slider(slick)
 </script>
-
 </body>
 </html>
