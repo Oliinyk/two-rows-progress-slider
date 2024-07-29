@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slick Slider Example</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    <style>
+        body {
+            font-family: Denim, sans-serif;
+            min-height: 100%;
+            margin: 0;
+        }
+        * {
+            box-sizing: border-box;
+        }
+        @font-face {
+            font-family: 'Denim';
+            src: url('https://uploads-ssl.webflow.com/60f53868cd59a339d865d5f7/62d074bb809a2b41ff8701bf_Denim-Light.ttf') format('truetype');
+            font-weight: 300;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Denim';
+            src: url('https://uploads-ssl.webflow.com/60f53868cd59a339d865d5f7/62d074bba0bc1f5360f7f438_Denim-Heavy.ttf') format('truetype');
+            font-weight: 900;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Denim';
+            src: url('https://uploads-ssl.webflow.com/60f53868cd59a339d865d5f7/62d074bb3ef98053012bd6b1_Denim-Regular.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Denim';
+            src: url('https://uploads-ssl.webflow.com/60f53868cd59a339d865d5f7/62d074bbbddd682b7e8ff20c_Denim-Medium.ttf') format('truetype');
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Denim';
+            src: url('https://uploads-ssl.webflow.com/60f53868cd59a339d865d5f7/62d074bb7681f817d5bba130_Denim-SemiBold.ttf') format('truetype');
+            font-weight: 600;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Denim';
+            src: url('https://uploads-ssl.webflow.com/60f53868cd59a339d865d5f7/62d074bb2672237df6679bac_Denim-Bold.ttf') format('truetype');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+        :root {
+            --dark: black;
+            --main-font: black;
+            --white: white;
+            --text-primary: #32343c;
+            --nred: #c93f3f;
+            --muted-font: #545860;
+            --accent: #4848ff;
+            --head-primary: #232326;
+            --contrast-muted: black;
+            --gray: #989aa2;
+            --accent-2: #ff6e6e;
+            --contrast-border: #ababab;
+            --hacker-green: #40d763;
+            --contrast-font: black;
+            --muted-dark-font: black;
+            --almost-white: #fcfcfc;
+            --transparent: rgba(255,255,255,0);
+            --text-gray: #605f5f;
+            --footer-bg: #222328
+        }
+        .container {
+            width: 100%;
+            max-width: 1204px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 20px;
+            padding-right: 20px;
+            display: block;
+        }
+        .native-modern-stack-section {
+            background-color: var(--transparent);
+            color: var(--text-primary);
+            -webkit-text-stroke-color: var(--white);
+            padding: 100px 0;
+            overflow: hidden
+        }
+        .title-wrap {
+            text-align: center;
+            flex-flow: wrap;
+            justify-content: center;
+            width: 100%;
+            margin-bottom: 68px;
+            display: flex;
+        }
+        .section-name-wrap {
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 25px;
+            display: flex;
+        }
+        .name-line {
+            justify-content: flex-start;
+            align-items: center;
+            display: flex;
+        }
+        .w-embed:before, .w-embed:after {
+            content: " ";
+            grid-area: 1 / 1 / 2 / 2;
+            display: table;
+        }
+        .section-name {
+            color: var(--head-primary);
+            letter-spacing: 0;
+            margin: 0 20px;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.3;
+        }
+        .title-h2 {
+            color: var(--head-primary);
+            width: 100%;
+            margin-top: 0;
+            margin-bottom: 22px;
+            font-size: 40px;
+            line-height: 1.3;
+            font-weight: 500;
+        }
+        p {
+            color: var(--dark);
+            letter-spacing: .4px;
+            margin-bottom: 10px;
+            font-family: Denim, sans-serif;
+            font-size: 16px;
+            line-height: 24.3px;
+        }
+        .text-gray {
+            color: var(--text-gray);
+            text-align: center;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .slider-img-row {
+            position: relative;
+        }
+        .icon-slider .slick-current {
+            background-color: #F9F9F9;
+        }
+        .icon-slider img {
+            transition: width 0.3s, height 0.3s;
+        }
+        .icon-slider .item-img.slick-slide {
+            display: flex;
+            height: 140px;
+            width: 140px;
+        }
+        .item-img-wrap {
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            display: flex;
+        }
+        .item-img {
+            border: 1px solid #eaeaea;
+            border-radius: 20px;
+            justify-content: center;
+            align-items: center;
+            margin-left: 10px;
+            margin-right: 10px;
+            display: flex
+        }
+        .item-img.active {
+            background-color: #f9f9f9;
+            width: 160px;
+            height: 160px
+        }
+        .text-slider .item-txt.slick-slide {
+            width: 300px;
+            transition: all 0.25s;
+        }
+        .text-slider .progress-bar {
+            display: none;
+        }
+        .text-slider .slick-current .progress-bar {
+            display: flex;
+        }
+        .text-slider.slider-nav {
+            margin-top: 55px
+        }
+        .text-slider-wrap.swiper-wrapper {
+            display: flex
+        }
+        .item-txt {
+            border: 1px solid #eaeaea;
+            border-radius: 8px;
+            margin-left: 10px;
+            margin-right: 10px;
+            padding: 24px
+        }
+        .item-txt.swiper-slide {
+            border: 1px solid #eaeaea;
+            border-radius: 8px;
+            padding: 24px
+        }
+        .item-txt-title {
+            color: var(--dark);
+            margin-top: 0;
+            margin-bottom: 7px;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.45
+        }
+        .item-txt-text {
+            color: var(--text-gray);
+            font-size: 14px;
+            line-height: 1.6
+        }
+        .text-slider .progress-bar {
+            display: none;
+        }
+        .text-slider .slick-current .progress-bar {
+            display: flex;
+        }
+        .progress-bar {
+            background-color: rgba(187, 187, 187, .1);
+            border-radius: 3px;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+            height: 5px;
+            padding-left: 3px;
+            padding-right: 3px;
+            display: flex;
+            position: relative;
+            overflow: hidden;
+        }
+        .progress-line {
+            background-color: var(--contrast-font);
+            border-radius: 3px;
+            width: 0%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        @media screen and (min-width: 768px) {
+            .icon-slider .item-img.slick-slide {
+                transition: transform 0.25s;
+                transform: scale(0.5);
+            }
+            .icon-slider .slick-x {
+                transform: scale(0.5);
+                margin: 0;
+            }
+            .icon-slider .slick-x + .slick-slide {
+                transform: scale(0.65);
+                margin: 0;
+            }
+            .icon-slider .slick-x + .slick-slide + .slick-slide {
+                transform: scale(0.75);
+            }
+            .icon-slider .slick-x + .slick-slide + .slick-slide + .slick-slide {
+                transform: scale(0.85);
+            }
+            .icon-slider .slick-x + .slick-slide + .slick-slide + .slick-slide + .slick-slide {
+                transform: scale(1);
+            }
+            .icon-slider .slick-x + .slick-slide + .slick-slide + .slick-slide + .slick-slide + .slick-slide {
+                transform: scale(0.85);
+            }
+            .icon-slider .slick-x + .slick-slide + .slick-slide + .slick-slide + .slick-slide + .slick-slide + .slick-slide {
+                transform: scale(0.75);
+            }
+            .icon-slider .slick-x + .slick-slide + .slick-slide + .slick-slide + .slick-slide + .slick-slide + .slick-slide + .slick-slide {
+                transform: scale(0.65);
+                margin: 0;
+            }
+            .icon-slider .slick-x + .slick-slide + .slick-slide + .slick-slide + .slick-slide + .slick-slide + .slick-slide + .slick-slide + .slick-slide {
+                transform: scale(0.5);
+                margin: 0;
+            }
+            .text-slider .slick-x, .text-slider .slick-x + .slick-slide + .slick-slide + .slick-slide + .slick-slide {
+                transform: scale(0.6);
+                margin: -45px 0 0;
+            }
+            .text-slider .slick-x + .slick-slide, .text-slider .slick-x + .slick-slide + .slick-slide + .slick-slide {
+                transform: scale(0.8);
+                margin: -15px 0 0;
+            }
+            .text-slider .slick-x + .slick-slide + .slick-slide {
+                transform: scale(1);
+            }
+        }
+        @media screen and (min-width: 992px) {
+            .data-lake-mask {
+                display: flex;
+                flex-direction: column;
+            }
+            .slider-img-row::before, .slider-img-row::after {
+                content: '';
+                position: absolute;
+                background: linear-gradient(270deg, rgba(255, 255, 255, 0.00) 0%, #FFF 100%);
+                width: 500px;
+                height: 100%;
+                top: 0;
+                z-index: 1;
+            }
+            .slider-img-row::before {
+                left: 0;
+            }
+            .slider-img-row::after {
+                right: 0;
+                transform: rotate(180deg);
+            }
+        }
+        @media screen and (max-width: 767px) {
+            .icon-slider .item-img.slick-slide, .text-slider .item-txt.slick-slide {
+                transition: transform 0.25s;
+                transform: scale(0.8);
+            }
+            .icon-slider .item-img.slick-slide.slick-current, .text-slider .item-txt.slick-slide.slick-current {
+                transform: scale(1);
+            }
+            .text-slider .item-txt.slick-slide {
+                margin-top: -22px;
+            }
+            .text-slider .item-txt.slick-slide.slick-current {
+                margin-top: 0;
+            }
+            .slider-img-row.slick-row {
+                width: calc(100% + 40px);
+                margin-left: -20px;
+                margin-right: -20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="native-modern-stack-section">
+        <div class="container">
+            <div class="row">
+                <div class="title-wrap">
+                    <div class="section-name-wrap">
+                        <div class="name-line w-embed">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="2" viewBox="0 0 80 2" fill="none">
+                                <path d="M0 1H80" stroke="url(#paint0_linear_4208_172786)"/>
+                                <defs>
+                                <linearGradient id="paint0_linear_4208_172786" x1="0" y1="1.5" x2="80" y2="1.5" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="white" stop-opacity="0"/>
+                                <stop offset="1" stop-color="#CECECE"/>
+                                </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        <p class="section-name">Enter Section Name</p>
+                        <div class="name-line w-embed">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="2" viewBox="0 0 80 2" fill="none">
+                                <path d="M80 1L1.63913e-06 0.999993" stroke="url(#paint0_linear_4208_172788)"/>
+                                <defs>
+                                <linearGradient id="paint0_linear_4208_172788" x1="80" y1="0.5" x2="4.37114e-08" y2="0.499993" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="white" stop-opacity="0"/>
+                                <stop offset="1" stop-color="#CECECE"/>
+                                </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                    </div>
+                    <h2 class="title-h2">Native to the Modern Stack.</h2>
+                    <p class="text-gray">Connect to everything needed to paint a complete data picture of your app during and<br/> after development.</p>
+                </div>
+                <div class="slider-img-row slick-row">
+                    <div class="icon-slider slider-for">
+                        <div class="item-img">
+                            <div class="item-img-wrap">
+                                <img loading="lazy" src="https://cdn.prod.website-files.com/60f53868cd59a339d865d5f7/668d23ea67e32d8d585a5a38_google-cloud-seeklogo.com%201.svg" alt="native-modern-stack-img" class="native-img"/>
+                            </div>
+                        </div>
+                        <div class="item-img">
+                            <div class="item-img-wrap">
+                                <img loading="lazy" src="https://cdn.prod.website-files.com/60f53868cd59a339d865d5f7/668d23fd032e43e8309ae07c_github-mark%202.svg" alt="native-modern-stack-img" class="native-img"/>
+                            </div>
+                        </div>
+                        <div class="item-img">
+                            <div class="item-img-wrap">
+                                <img loading="lazy" src="https://cdn.prod.website-files.com/60f53868cd59a339d865d5f7/668d240261b6af3794026abc_The%20Logo.svg" alt="native-modern-stack-img" class="native-img"/>
+                            </div>
+                        </div>
+                        <div class="item-img">
+                            <div class="item-img-wrap">
+                                <img loading="lazy" src="https://cdn.prod.website-files.com/60f53868cd59a339d865d5f7/668d240c19bfca5830b75a7d_kubernetes-icon%202.svg" alt="native-modern-stack-img" class="native-img"/>
+                            </div>
+                        </div>
+                        <div class="item-img">
+                            <div class="item-img-wrap">
+                                <img loading="lazy" src="https://cdn.prod.website-files.com/60f53868cd59a339d865d5f7/668d1f7292eaa0f31ef079d7_Group%204934.svg" alt="native-modern-stack-img" class="native-img"/>
+                            </div>
+                        </div>
+                        <div class="item-img">
+                            <div class="item-img-wrap">
+                                <img src="https://cdn.prod.website-files.com/60f53868cd59a339d865d5f7/6693c7bcb21641a367b2032d_Group.svg" loading="lazy" width="80" height="Auto" alt="native-modern-stack-img" class="native-img"/>
+                            </div>
+                        </div>
+                        <div class="item-img">
+                            <div class="item-img-wrap">
+                                <img src="https://cdn.prod.website-files.com/60f53868cd59a339d865d5f7/668d241f702ab3545ea5dced_1200px-Bitbucket-blue-logomark-only%201.svg" loading="lazy" alt="native-modern-stack-img" class="native-img"/>
+                            </div>
+                        </div>
+                        <div class="item-img">
+                            <div class="item-img-wrap">
+                                <img src="https://cdn.prod.website-files.com/60f53868cd59a339d865d5f7/66952b1005183d73239015fc_Terraform-svg.svg" loading="lazy" alt="native-modern-stack-img" class="native-img"/>
+                            </div>
+                        </div>
+                        <div class="item-img">
+                            <div class="item-img-wrap">
+                                <img src="https://cdn.prod.website-files.com/60f53868cd59a339d865d5f7/668d243685edd157b6191be9_2560px-Amazon_Web_Services_Logo%201.svg" loading="lazy" width="Auto" alt="native-modern-stack-img" class="native-img"/>
+                            </div>
+                        </div>
+                        <div class="item-img">
+                            <div class="item-img-wrap">
+                                <img loading="lazy" src="https://cdn.prod.website-files.com/60f53868cd59a339d865d5f7/668d23ea67e32d8d585a5a38_google-cloud-seeklogo.com%201.svg" alt="native-modern-stack-img" class="native-img"/>
+                            </div>
+                        </div>
+                        <div class="item-img">
+                            <div class="item-img-wrap">
+                                <img loading="lazy" src="https://cdn.prod.website-files.com/60f53868cd59a339d865d5f7/668d23fd032e43e8309ae07c_github-mark%202.svg" alt="native-modern-stack-img" class="native-img"/>
+                            </div>
+                        </div>
+                        <div class="item-img">
+                            <div class="item-img-wrap">
+                                <img loading="lazy" src="https://cdn.prod.website-files.com/60f53868cd59a339d865d5f7/668d240261b6af3794026abc_The%20Logo.svg" alt="native-modern-stack-img" class="native-img"/>
+                            </div>
+                        </div>
+                        <div class="item-img">
+                            <div class="item-img-wrap">
+                                <img loading="lazy" src="https://cdn.prod.website-files.com/60f53868cd59a339d865d5f7/668d240c19bfca5830b75a7d_kubernetes-icon%202.svg" alt="native-modern-stack-img" class="native-img"/>
+                            </div>
+                        </div>
+                        <div class="item-img">
+                            <div class="item-img-wrap">
+                                <img loading="lazy" src="https://cdn.prod.website-files.com/60f53868cd59a339d865d5f7/668d1f7292eaa0f31ef079d7_Group%204934.svg" alt="native-modern-stack-img" class="native-img"/>
+                            </div>
+                        </div>
+                        <div class="item-img">
+                            <div class="item-img-wrap">
+                                <img src="https://cdn.prod.website-files.com/60f53868cd59a339d865d5f7/6693c7bcb21641a367b2032d_Group.svg" loading="lazy" width="80" alt="native-modern-stack-img" class="native-img"/>
+                            </div>
+                        </div>
+                        <div class="item-img">
+                            <div class="item-img-wrap">
+                                <img src="https://cdn.prod.website-files.com/60f53868cd59a339d865d5f7/668d241f702ab3545ea5dced_1200px-Bitbucket-blue-logomark-only%201.svg" loading="lazy" alt="native-modern-stack-img" class="native-img"/>
+                            </div>
+                        </div>
+                        <div class="item-img">
+                            <div class="item-img-wrap">
+                                <img src="https://cdn.prod.website-files.com/60f53868cd59a339d865d5f7/66952b1005183d73239015fc_Terraform-svg.svg" loading="lazy" alt="native-modern-stack-img" class="native-img"/>
+                            </div>
+                        </div>
+                        <div class="item-img">
+                            <div class="item-img-wrap">
+                                <img src="https://cdn.prod.website-files.com/60f53868cd59a339d865d5f7/668d243685edd157b6191be9_2560px-Amazon_Web_Services_Logo%201.svg" loading="lazy" alt="native-modern-stack-img" class="native-img"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-slider slider-nav">
+                        <div class="item-txt">
+                            <h4 class="item-txt-title">GCP</h4>
+                            <p class="item-txt-text">Sync your Compute Engine Instances, Cloud Functions, GKE Clusters, SQL Databases, Cloud Builds, Artifact Registries, and more to come.</p>
+                            <div class="progress-bar">
+                                <div class="progress-line"></div>
+                            </div>
+                        </div>
+                        <div class="item-txt">
+                            <h4 class="item-txt-title">GitHub</h4>
+                            <p class="item-txt-text">Import data that paints the picture of your source code and engineering. Sync your Repos, Commits, Pull Requests, Tags, and People.</p>
+                            <div class="progress-bar">
+                                <div class="progress-line"></div>
+                            </div>
+                        </div>
+                        <div class="item-txt">
+                            <h4 class="item-txt-title">FOCUS</h4>
+                            <p class="item-txt-text">Import your billing data in FOCUS format from GCP, AWS, and more to come.</p>
+                            <div class="progress-bar">
+                                <div class="progress-line"></div>
+                            </div>
+                        </div>
+                        <div class="item-txt">
+                            <h4 class="item-txt-title">Kubernetes</h4>
+                            <p class="item-txt-text">Sync the major resource types from any cluster, including Deployments, Pods, HTTP Routes, Ingresses, and more. </p>
+                            <div class="progress-bar">
+                                <div class="progress-line"></div>
+                            </div>
+                        </div>
+                        <div class="item-txt">
+                            <h4 class="item-txt-title">OpenTelemetry</h4>
+                            <p class="item-txt-text">Ingest Metrics, Logs, and Traces from OpenTelemetry collector on any cloud or On Prem. Use our Helm Charts to deploy collectors in your Kubernetes or point your existing ones to your nMachine.</p>
+                            <div class="progress-bar">
+                                <div class="progress-line"></div>
+                            </div>
+                        </div>
+                        <div class="item-txt">
+                            <h4 class="item-txt-title">Jira</h4>
+                            <p class="item-txt-text">Import data that paints an accurate picture of your engineering movement: Sprints, Tickets, and Epics. Combine with GitHub and Helm for an even richer picture.</p>
+                            <div class="progress-bar">
+                                <div class="progress-line"></div>
+                            </div>
+                        </div>
+                        <div class="item-txt">
+                            <h4 class="item-txt-title">Helm</h4>
+                            <p class="item-txt-text">Get the most accurate picture of your release practices possible by connecting to Helm and importing revisions data.</p>
+                            <div class="progress-bar">
+                                <div class="progress-line"></div>
+                            </div>
+                        </div>
+                        <div class="item-txt">
+                            <h4 class="item-txt-title">Terraform</h4>
+                            <p class="item-txt-text">Connect to your Terraform Cloud account and create new instances or environments of your application directly from inside your nMachine.</p>
+                            <div class="progress-bar">
+                                <div class="progress-line"></div>
+                            </div>
+                        </div>
+                        <div class="item-txt">
+                            <h4 class="item-txt-title">AWS</h4>
+                            <p class="item-txt-text">Sync your EC2 Instances, Lambda Functions EKS Clusters, SQL Databases, S3 Buckets, and more to come.</p>
+                            <div class="progress-bar">
+                                <div class="progress-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script type="text/javascript">
+    
+    //Icon slider(slick)
+	function updateSlickXClass(slick, next) {
+      
+      const count = slick.slideCount,
+            show = slick.options.slidesToShow,
+            center = slick.options.centerMode,
+            index = (next || 0) - center * (count > show ? Math.floor(show / 2) : 0),
+            selector = shift => `[data-slick-index="${index + shift * count}"]`;
+      
+      $('.slick-x', slick.$slider).removeClass('slick-x');
+      $(selector(0) + ', ' + selector(1) + ', ' + selector(-1), slick.$slider).addClass('slick-x');
+  }
+
+  if ($('.slider-for').length) {
+    $('.slider-for').slick({
+        slidesToShow: 9,
+        slidesToScroll: 1,
+        arrows: false,
+        asNavFor: '.slider-nav',
+        infinite: true,
+        autoplay: true,
+        autoplaySpeed: 5000,
+        centerMode: true,
+        variableWidth: true,
+        responsive: [
+          {
+            breakpoint: 768,
+            settings: {
+            	slidesToShow: 5,
+        			slidesToScroll: 1
+            }
+          },
+          {
+            breakpoint: 575,
+            settings: {
+            	slidesToShow: 2.3,
+        			slidesToScroll: 1,
+              centerMode: false,
+        			variableWidth: false,
+            }
+          }
+        ]
+    }).on('init beforeChange', function(e, slick, curr, next) {
+        updateSlickXClass(slick, next);
+    });
+  }
+  
+  if ($('.slider-nav').length) {
+    $('.slider-nav').slick({
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        asNavFor: '.slider-for',
+        arrows: false,
+        focusOnSelect: false,
+        infinite: true,
+        autoplay: true,
+        autoplaySpeed: 5000,
+        centerMode: true,
+        variableWidth: true,
+        responsive: [
+          {
+            breakpoint: 767,
+            settings: {
+              //slidesToShow: 1.2,
+              //slidesToScroll: 1,
+            },
+          },
+        ]
+    }).on('init beforeChange', function(e, slick, curr, next) {
+        updateSlickXClass(slick, next);
+    });
+	}
+  
+ 	if ($('.slider-for').length) {
+      $('.slider-for').slick('slickGoTo', 0);
+  }
+  
+	//slider progerssbar
+	function animateProgressLine($element) {
+    $element.css('width', '0%').animate({
+      width: '100%'
+    }, 5000);
+  }
+
+  function resetProgressLines(exceptIndex) {
+    $('.text-slider .slick-slide').each(function(index) {
+      if (index !== exceptIndex) {
+        $(this).find('.progress-line').stop(true, true).css('width', '0%');
+      }
+    });
+  }
+
+  $('.text-slider').on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+    resetProgressLines(nextSlide);
+  });
+
+  $('.text-slider').on('afterChange', function(event, slick, currentSlide) {
+    var $currentSlide = $(slick.$slides[currentSlide]);
+    var $progressLine = $currentSlide.find('.progress-line');
+    animateProgressLine($progressLine);
+  });
+
+  setTimeout(function() {
+    var $initialProgressLine = $('.text-slider .slick-slide.slick-current').find('.progress-line');
+    animateProgressLine($initialProgressLine);
+  }, 100); 
+
+  resetProgressLines(0);
+  // End slider progressbar
+  // End Icon slider(slick)
+
+</script>
+
+</body>
+</html>
