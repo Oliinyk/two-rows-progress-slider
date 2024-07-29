@@ -107,7 +107,8 @@
             align-items: center;
             display: flex;
         }
-        .w-embed:before, .w-embed:after {
+        .name-line:before,
+        .name-line:after {
             content: " ";
             grid-area: 1 / 1 / 2 / 2;
             display: table;
@@ -299,11 +300,12 @@
                 display: flex;
                 flex-direction: column;
             }
-            .slider-img-row::before, .slider-img-row::after {
+            .slider-img-row::before,
+            .slider-img-row::after {
                 content: '';
                 position: absolute;
                 background: linear-gradient(270deg, rgba(255, 255, 255, 0.00) 0%, #FFF 100%);
-                width: 500px;
+                width: 400px;
                 height: 100%;
                 top: 0;
                 z-index: 1;
@@ -344,7 +346,7 @@
             <div class="row">
                 <div class="title-wrap">
                     <div class="section-name-wrap">
-                        <div class="name-line w-embed">
+                        <div class="name-line">
                             <svg xmlns="http://www.w3.org/2000/svg" width="80" height="2" viewBox="0 0 80 2" fill="none">
                                 <path d="M0 1H80" stroke="url(#paint0_linear_4208_172786)"/>
                                 <defs>
@@ -356,7 +358,7 @@
                             </svg>
                         </div>
                         <p class="section-name">Enter Section Name</p>
-                        <div class="name-line w-embed">
+                        <div class="name-line">
                             <svg xmlns="http://www.w3.org/2000/svg" width="80" height="2" viewBox="0 0 80 2" fill="none">
                                 <path d="M80 1L1.63913e-06 0.999993" stroke="url(#paint0_linear_4208_172788)"/>
                                 <defs>
@@ -540,75 +542,66 @@
     //Icon slider(slick)
 	function updateSlickXClass(slick, next) {
         const count = slick.slideCount,
-            show = slick.options.slidesToShow,
-            center = slick.options.centerMode,
-            index = (next || 0) - center * (count > show ? Math.floor(show / 2) : 0),
-            selector = shift => `[data-slick-index="${index + shift * count}"]`;
+              show = slick.options.slidesToShow,
+              center = slick.options.centerMode,
+              index = (next || 0) - center * (count > show ? Math.floor(show / 2) : 0),
+              selector = shift => `[data-slick-index="${index + shift * count}"]`;
         
         $('.slick-x', slick.$slider).removeClass('slick-x');
         $(selector(0) + ', ' + selector(1) + ', ' + selector(-1), slick.$slider).addClass('slick-x');
-  }
+    }
 
-  if ($('.slider-for').length) {
-    $('.slider-for').slick({
-        slidesToShow: 9,
-        slidesToScroll: 1,
-        arrows: false,
-        asNavFor: '.slider-nav',
-        infinite: true,
-        autoplay: true,
-        autoplaySpeed: 5000,
-        centerMode: true,
-        variableWidth: true,
-        responsive: [
-          {
-            breakpoint: 768,
-            settings: {
-            	slidesToShow: 5,
-        		slidesToScroll: 1
-            }
-          },
-          {
-            breakpoint: 575,
-            settings: {
-            	slidesToShow: 2.3,
-        		slidesToScroll: 1,
-                centerMode: false,
-        		variableWidth: false,
-            }
-          }
-        ]
-    }).on('init beforeChange', function(e, slick, curr, next) {
-        updateSlickXClass(slick, next);
-    });
-  }
+    if ($('.slider-for').length) {
+        $('.slider-for').slick({
+            slidesToShow: 9,
+            slidesToScroll: 1,
+            arrows: false,
+            asNavFor: '.slider-nav',
+            infinite: true,
+            autoplay: true,
+            autoplaySpeed: 5000,
+            centerMode: true,
+            variableWidth: true,
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 5,
+                        slidesToScroll: 1
+                    }
+                },
+                {
+                    breakpoint: 575,
+                    settings: {
+                        slidesToShow: 2.3,
+                        slidesToScroll: 1,
+                        centerMode: false,
+                        variableWidth: false,
+                    }
+                }
+            ]
+        }).on('init beforeChange', function(e, slick, curr, next) {
+            updateSlickXClass(slick, next);
+        });
+    }
   
-  if ($('.slider-nav').length) {
-    $('.slider-nav').slick({
-        slidesToShow: 5,
-        slidesToScroll: 1,
-        asNavFor: '.slider-for',
-        arrows: false,
-        focusOnSelect: false,
-        infinite: true,
-        autoplay: true,
-        autoplaySpeed: 5000,
-        centerMode: true,
-        variableWidth: true,
-        dots: true,
-        responsive: [
-          {
-            breakpoint: 767,
-            settings: {
-              //slidesToShow: 1.2,
-              //slidesToScroll: 1,
-            },
-          },
-        ]
-    }).on('init beforeChange', function(e, slick, curr, next) {
-        updateSlickXClass(slick, next);
-    });
-	}
+    if ($('.slider-nav').length) {
+        $('.slider-nav').slick({
+            slidesToShow: 5,
+            slidesToScroll: 1,
+            asNavFor: '.slider-for',
+            arrows: false,
+            focusOnSelect: false,
+            infinite: true,
+            autoplay: true,
+            autoplaySpeed: 5000,
+            centerMode: true,
+            variableWidth: true,
+            dots: true,
+        }).on('init beforeChange', function(e, slick, curr, next) {
+            updateSlickXClass(slick, next);
+        });
+    }
   
  	if ($('.slider-for').length) {
         $('.slider-for').slick('slickGoTo', 0);
@@ -617,7 +610,7 @@
 	//slider progerssbar
 	function animateProgressLine($element) {
         $element.css('width', '0%').animate({
-        width: '100%'
+            width: '100%'
         }, 5000);
     }
 
